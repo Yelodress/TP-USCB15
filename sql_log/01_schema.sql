@@ -1,0 +1,8 @@
+CREATE TABLE log (
+  id INT PRIMARY KEY AUTO_INCREMENT,
+  timestamp DATETIME NOT NULL,
+  service VARCHAR(50) NOT NULL,
+  level VARCHAR(20) NOT NULL,
+  message TEXT NOT NULL,
+  details JSON
+);

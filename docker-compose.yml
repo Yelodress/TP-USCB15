@@ -1,0 +1,56 @@
+services:
+  db_api:
+    image: mysql:8.0
+    environment:
+      MYSQL_ROOT_PASSWORD: rootpass
+      MYSQL_DATABASE: tp_uscb15
+      MYSQL_USER: tp_user
+      MYSQL_PASSWORD: tp_pass
+    ports:
+      - "3308:3306"
+    volumes:
+      - db_api_data:/var/lib/mysql
+      - ./sql:/docker-entrypoint-initdb.d:ro
+
+  db_log:
+    image: mysql:8.0
+    environment:
+      MYSQL_ROOT_PASSWORD: rootpass
+      MYSQL_DATABASE: tp_log
+      MYSQL_USER: log_user
+      MYSQL_PASSWORD: log_pass
+    ports:
+      - "3309:3306"
+    volumes:
+      - db_log_data:/var/lib/mysql
+      - ./sql_log:/docker-entrypoint-initdb.d:ro
+
+  api:
+    build: ./backend
+    ports:
+      - "8000:8000"
+    environment:
+      DB_HOST: db_api
+      DB_PORT: 3306
+      DB_NAME: tp_uscb15
+      DB_USER: tp_user
+      DB_PASS: tp_pass
+    depends_on:
+      - db_api
+
+  log_service:
+    build: ./log_service
+    ports:
+      - "8001:8001"
+    environment:
+      DB_HOST: db_log
+      DB_PORT: 3306
+      DB_NAME: tp_log
+      DB_USER: log_user
+      DB_PASS: log_pass
+    depends_on:
+      - db_log
+
+volumes:
+  db_api_data:
+  db_log_data:
