@@ -37,4 +37,4 @@ Ce projet vise à...
 
 
 # Schema
-<img width="1476" height="1820" alt="Blank diagram" src="https://github.com/user-attachments/assets/1efdf951-b800-4fbd-9ec5-fc7b736a1b0d" />
+<img width="1476" height="1800" alt="Blank diagram(1)" src="https://github.com/user-attachments/assets/44026ac0-0763-47a5-a9ae-841b925ff2a0" />
