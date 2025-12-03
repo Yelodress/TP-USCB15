@@ -1,4 +1,23 @@
 # TP-USCB15
+Ce projet vise à...
+## Technologies utilisées
+<details>
+<summary>Côté serveur</summary>
+
+- Langage de programmation:`Python`
+- Principes de fonctionnement:`REST`
+- Gestion du serveur WEB:`FLASK`
+- Gestion des bases de données:`MySQL`
+- Conteneurisation:`Docker`
+</details>
+<details>
+<summary>Côté client</summary>
+
+- Framework:`Flutter`
+- Chiffrement des données:`AES-CGM 256`
+- Chiffrement homomorphe:`?`
+</details>
+
 ## Liste des routes disponibles
 <details>
 <summary>Routes des questions/réponses</summary>
