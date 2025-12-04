@@ -38,10 +38,9 @@ Ce projet vise à...
 ## Composants de l’application
 
 | Composant | Description |
-| :---         |     :---:      |
+| :---         |     :---      |
 | Application Mobile   | Réalise la collecte de données et renvois les datas vers l'API     | 
-| API gateway     | Point d'entrée unique pour interaction avec api/bdd.
-ce service servira à authentifier l’utilisateur      |
+| API gateway     | Point d'entrée unique pour interaction avec api/bdd.Ce service servira à authentifier l’utilisateur      |
 | Service API   | Reçoit et renvoie les requêtes des utilisateur auth et interagis avec la BDD de questions réponses     | 
 | API gateway     | git diff       |
 | Application Mobile   | Réalise la collecte de données et renvois les datas vers l'API     | 
