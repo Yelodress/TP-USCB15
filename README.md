@@ -1,5 +1,10 @@
 # TP-USCB15
-Ce projet vise à...
+Ce projet a pour objectif de développer une application mobile communiquant avec une API.
+L’API est construite sous forme de microservices, chacun disposant de sa propre base de données.
+
+L’accès à l’application et aux fonctionnalités de l’API est protégé par une authentification via JWT, afin de garantir l’identité de l’utilisateur.
+
+Enfin, chaque action effectuée est enregistrée par un agent de logs, qui se charge de chiffrer et de gérer la journalisation pour renforcer la sécurité du système.
 ## Technologies utilisées
 <details>
 <summary>Côté serveur</summary>
