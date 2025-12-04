@@ -26,9 +26,10 @@ Enfin, chaque action effectuée est enregistrée par un agent de logs, qui se ch
 ## Liste des routes disponibles
 <details>
 <summary>Routes des questions/réponses</summary>
-
+- `GET /question` Affiche toutes les questions
+- `POST /question` Crée une question
 - `GET /question/<id>` Affiche une question en fonction de son ID
-- `POST /answer/<id>` Poste la réponse en fonction de la question
+- `POST /answer/<id>` Poste les réponses en fonction de la question
 - `POST /photo/<id>` Poste la photo liée à la réponse
 </details>
 
@@ -54,7 +55,6 @@ Enfin, chaque action effectuée est enregistrée par un agent de logs, qui se ch
 
 # Schema
 <img width="1476" height="1800" alt="Blank diagram(1)" src="https://github.com/user-attachments/assets/44026ac0-0763-47a5-a9ae-841b925ff2a0" />
-
 
 # Installation
 ## Prérequis
