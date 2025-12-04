@@ -47,9 +47,9 @@ Enfin, chaque action effectuée est enregistrée par un agent de logs, qui se ch
 | Application Mobile   | Réalise la collecte de données et renvois les datas vers l'API     | 
 | API gateway     | Point d'entrée unique pour interaction avec api/bdd.Ce service servira à authentifier l’utilisateur      |
 | Service API   | Reçoit et renvoie les requêtes des utilisateur auth et interagis avec la BDD de questions réponses     | 
-| API gateway     | git diff       |
 | Application Mobile   | Réalise la collecte de données et renvois les datas vers l'API     | 
 | Service Agent log     |  stock chiffre et gère la politique de rétention des logs       |
+| KMS    | Stock et gere les clef de chiffrement utilisé pour securiser les datas      |
 
 
 # Schema
