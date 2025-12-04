@@ -54,3 +54,36 @@ Enfin, chaque action effectuée est enregistrée par un agent de logs, qui se ch
 
 # Schema
 <img width="1476" height="1800" alt="Blank diagram(1)" src="https://github.com/user-attachments/assets/44026ac0-0763-47a5-a9ae-841b925ff2a0" />
+
+
+# Installation
+## Prérequis
+### Docker
+#### Ajout du repo Docker:
+```
+  # Add Docker's official GPG key:
+sudo apt update
+sudo apt install ca-certificates curl
+sudo install -m 0755 -d /etc/apt/keyrings
+sudo curl -fsSL https://download.docker.com/linux/ubuntu/gpg -o /etc/apt/keyrings/docker.asc
+sudo chmod a+r /etc/apt/keyrings/docker.asc
+
+# Add the repository to Apt sources:
+sudo tee /etc/apt/sources.list.d/docker.sources <<EOF
+Types: deb
+URIs: https://download.docker.com/linux/ubuntu
+Suites: $(. /etc/os-release && echo "${UBUNTU_CODENAME:-$VERSION_CODENAME}")
+Components: stable
+Signed-By: /etc/apt/keyrings/docker.asc
+EOF
+
+sudo apt update
+```
+#### Installation des compoosants nécéssaires
+```
+sudo apt install docker-ce docker-ce-cli containerd.io docker-buildx-plugin docker-compose-plugin
+```
+#### Test de bon fonctionnement
+```
+sudo docker run hello-world
+```
