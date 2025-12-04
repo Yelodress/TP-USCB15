@@ -35,6 +35,18 @@ Ce projet vise à...
 
 </details>
 
+## Composants de l’application
+
+| Composant | Description |
+| :---         |     :---:      |
+| Application Mobile   | Réalise la collecte de données et renvois les datas vers l'API     | 
+| API gateway     | Point d'entrée unique pour interaction avec api/bdd.
+ce service servira à authentifier l’utilisateur      |
+| Service API   | Reçoit et renvoie les requêtes des utilisateur auth et interagis avec la BDD de questions réponses     | 
+| API gateway     | git diff       |
+| Application Mobile   | Réalise la collecte de données et renvois les datas vers l'API     | 
+| Service Agent log     |  stock chiffre et gère la politique de rétention des logs       |
+
 
 # Schema
 <img width="1476" height="1800" alt="Blank diagram(1)" src="https://github.com/user-attachments/assets/44026ac0-0763-47a5-a9ae-841b925ff2a0" />
