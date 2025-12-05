@@ -54,7 +54,8 @@ Enfin, chaque action effectuée est enregistrée par un agent de logs, qui se ch
 
 
 # Schema
-<img width="1476" height="1800" alt="Blank diagram(1)" src="https://github.com/user-attachments/assets/44026ac0-0763-47a5-a9ae-841b925ff2a0" />
+
+<img width="1476" height="1800" alt="Blank diagram(2)" src="https://github.com/user-attachments/assets/282976ce-e8da-40b3-9351-f4f3b610739f" />
 
 # Installation
 ## Prérequis
