@@ -76,7 +76,7 @@ Enfin, chaque action effectuée est enregistrée par un agent de logs, qui se ch
 
 
 
-# Installation
+# Installation 🚧 (en cours de rédaction)
 ## Prérequis
 ### Docker
 #### Ajout du repo Docker:
