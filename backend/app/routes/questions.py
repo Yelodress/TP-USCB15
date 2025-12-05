@@ -15,17 +15,3 @@ def questions_endpoint(app):
             result = conn.execute(text("SELECT id, content, answer FROM question"))
             rows = [dict(r) for r in result.mappings()]
         return jsonify(rows), 200
-
-    @app.get("/question/<int:id>") # Affiche une question en fonction de son ID
-    @require_api_key
-    def get_question(id):
-        with engine.begin() as conn:
-            send_log("INFO", f"Détails de la question {id} demandés")
-            result = conn.execute(text("SELECT id, content, answer FROM question WHERE id = :id"), {"id": id})
-            row = result.mappings().first()
-
-            if row is None:
-                send_log("WARNING", f"Tentative d'accès à une question inexistante : {id}")
-                abort(404, description="Question not found")
-
-        return jsonify(dict(row)), 200
