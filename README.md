@@ -33,6 +33,8 @@ Enfin, chaque action effectuée est enregistrée par un agent de logs, qui se ch
 - `GET /question/<id>` Affiche une question en fonction de son ID
 - `POST /answer/<id>` Poste les réponses en fonction de la question
 - `POST /photo/<id>` Poste la photo liée à la réponse
+- `GET /answer/<id>` Récupère les réponses à une question
+- `GET /answer` Récupère toutes les réponses et l'ID des questions concernées
 </details>
 
 <details>
