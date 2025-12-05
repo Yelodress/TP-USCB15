@@ -26,6 +26,7 @@ Enfin, chaque action effectuée est enregistrée par un agent de logs, qui se ch
 ## Liste des routes disponibles
 <details>
 <summary>Routes des questions/réponses</summary>
+  
 - `GET /question` Affiche toutes les questions
 - `POST /question` Crée une question
 - `GET /question/<id>` Affiche une question en fonction de son ID
