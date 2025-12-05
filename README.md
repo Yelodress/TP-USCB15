@@ -53,9 +53,27 @@ Enfin, chaque action effectuée est enregistrée par un agent de logs, qui se ch
 | KMS    | Stock et gere les clef de chiffrement utilisé pour securiser les datas      |
 
 
-# Schema
+# Diagrammes
+<details>
+  <summary>Diagramme de déploiement</summary>
+  Ce diagramme n'est pas au format UML (mais a le même objectif)
+  
+  <img width="1476" height="1800" alt="Blank diagram(3)" src="https://github.com/user-attachments/assets/3edbde12-41c6-4d69-b5e9-9a45117d8087" />
+</details>
 
-<img width="1476" height="1800" alt="Blank diagram(3)" src="https://github.com/user-attachments/assets/3edbde12-41c6-4d69-b5e9-9a45117d8087" />
+<details>
+  <summary>Diagramme de séquence</summary>
+
+  <img width="2552" height="2580" alt="Sequence diagram(1)" src="https://github.com/user-attachments/assets/50ff95d8-e573-4ca8-9c98-ff3cc408eae4" />
+</details>
+
+<details>
+  <summary>Structure de bases de données (Diagramme de classes ?)</summary>
+
+  <img width="1040" height="829" alt="image" src="https://github.com/user-attachments/assets/36a84abd-51f2-4c71-8e9b-fa6a8881f03f" />
+</details>
+
+
 
 # Installation
 ## Prérequis
