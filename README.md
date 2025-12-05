@@ -45,12 +45,12 @@ Enfin, chaque action effectuée est enregistrée par un agent de logs, qui se ch
 
 | Composant | Description |
 | :---         |     :---      |
-| Application Mobile   | Réalise la collecte de données et renvois les datas vers l'API     | 
-| API gateway     | Point d'entrée unique pour interaction avec api/bdd.Ce service servira à authentifier l’utilisateur      |
-| Service API   | Reçoit et renvoie les requêtes des utilisateur auth et interagis avec la BDD de questions réponses     | 
-| Application Mobile   | Réalise la collecte de données et renvois les datas vers l'API     | 
-| Service Agent log     |  stock chiffre et gère la politique de rétention des logs       |
-| KMS    | Stock et gere les clef de chiffrement utilisé pour securiser les datas      |
+| Application Mobile   | Réalie les appels API pour l'envoi de données (réponses, photos, ...)     | 
+| API gateway     | Point d'entrée unique pour les interactions vers l'API et les BDD. Ce service servira également authentifier l’utilisateur et gèrera le TLS     |
+| Service API   | Reçoit, traite et renvoie les requêtes des utilisateur authentifiés et interagis avec les bases de données    | 
+| Bases de données   | Différentes bases de données sont présentes sur le système. Elles stockent chacune des informations différentes.     | 
+| Service Agent log     |  Réceptionne et gère les logs du système entier.       |
+| Gestionnaire d'identité    | Génère, stoque et gère les clés et les tokens utilisés par le système entier.      |
 
 
 # Diagrammes
