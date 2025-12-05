@@ -36,8 +36,7 @@ Enfin, chaque action effectuée est enregistrée par un agent de logs, qui se ch
 <details>
 <summary>Routes des identité</summary>
 
-- `GET /login/<jwt>` Récupère les informations d'un utilisateur pour se login
-- `GET /signup` Crée un utilisateur et lui attribue un JWT
+- `POST /auth` Poste les identifiants rentrés dans l'application mobile. Un retour de JWT est attendu si les identifiants sont valides.
 
 </details>
 
