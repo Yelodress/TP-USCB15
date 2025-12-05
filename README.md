@@ -1,6 +1,6 @@
 # TP-USCB15
 Ce projet a pour objectif de développer une application mobile communiquant avec une API.
-L’API est construite sous forme de microservices, chacun disposant de sa propre base de données.
+L’API est construite sous forme de microservices, chacun disposant de sa/ses propre(s) base(s) de données.
 
 L’accès à l’application et aux fonctionnalités de l’API est protégé par une authentification via JWT, afin de garantir l’identité de l’utilisateur.
 
