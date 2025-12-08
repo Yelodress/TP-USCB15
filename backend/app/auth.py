@@ -1,7 +1,7 @@
 from flask import request, abort
 from functools import wraps
 from sqlalchemy import text
-from app.config import engine  # ou app.db si tu changes
+from app.config import engine
 
 def require_api_key(func):
     @wraps(func)

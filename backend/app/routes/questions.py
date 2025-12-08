@@ -1,4 +1,3 @@
-# ...existing code...
 from flask import request, jsonify, abort
 from sqlalchemy import text
 from ..connect import engine
@@ -15,4 +14,3 @@ def questions_endpoint(app):
             result = conn.execute(text("SELECT id, content, answer FROM question"))
             rows = [dict(r) for r in result.mappings()]
         return jsonify(rows), 200
-# ...existing code...
