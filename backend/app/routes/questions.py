@@ -17,7 +17,7 @@ def questions_endpoint(app):
 
     @app.get("/questions/<ref>") # Afficher un question en particulier
     @require_api_key
-    def list_questions(ref):
+    def get_questions(ref):
         with engine.begin() as conn:
             send_log("INFO", f"La question {ref} a ete demandee")
             result = conn.execute(text("SELECT id, content FROM questions Where LOWER(id) = LOWER(:ref)"),{"ref": ref})
