@@ -14,3 +14,12 @@ def questions_endpoint(app):
             result = conn.execute(text("SELECT id, content, answer FROM question"))
             rows = [dict(r) for r in result.mappings()]
         return jsonify(rows), 200
+
+    @app.get("/questions/<ref>") # Afficher un question en particulier
+    @require_api_key
+    def list_questions(ref):
+        with engine.begin() as conn:
+            send_log("INFO", f"La question {ref} a ete demandee")
+            result = conn.execute(text("SELECT id, content FROM questions Where LOWER(id) = LOWER(:ref)"),{"ref": ref})
+            rows = [dict(r) for r in result.mappings()]
+        return jsonify(rows), 200
