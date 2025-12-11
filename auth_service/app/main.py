@@ -1,5 +1,6 @@
 from flask import Flask, jsonify
 from app.routes.auth import auth_endpoint
+from app.routes.call import call_endpoint
 
 def create_app():
     app = Flask(__name__)
@@ -9,6 +10,7 @@ def create_app():
         return jsonify({"message": "auth service"})
 
     auth_endpoint(app)
+    call_endpoint(app)
     return app
 
 app = create_app()

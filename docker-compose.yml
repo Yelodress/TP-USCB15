@@ -35,6 +35,7 @@ services:
       DB_NAME: tp_uscb15
       DB_USER: tp_user
       DB_PASS: tp_pass
+      SECRET_KEY: ${SECRET_KEY}
     depends_on:
       - db_api
 
@@ -74,7 +75,7 @@ services:
       DB_NAME: tp_auth
       DB_USER: auth_user
       DB_PASS: auth_pass
-      SECRET_KEY: change_this_secret
+      SECRET_KEY: ${SECRET_KEY}
     depends_on:
       - db_auth
 

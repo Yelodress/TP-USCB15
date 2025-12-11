@@ -1,18 +1,36 @@
-from flask import request, abort
+from flask import request, abort, g
 from functools import wraps
-from sqlalchemy import text
-from app.config import engine
+import jwt
+from app.connect import SECRET_KEY
 
-def require_api_key(func):
+def require_jwt(func):
+    """
+    A decorator to protect endpoints with JWT authentication.
+
+    It expects an 'Authorization: Bearer <token>' header.
+    It decodes the JWT and if successful, stores the payload in `flask.g.user`.
+    """
     @wraps(func)
     def wrapper(*args, **kwargs):
-        print("Protection API KEY activée sur", request.path)
-        api_key = request.headers.get('X-API-KEY') or request.args.get('api_key')
-        if not api_key:
-            abort(401, description="API key required")
-        with engine.connect() as conn:
-            result = conn.execute(text("SELECT 1 FROM api_keys WHERE api_key = :api_key"), {"api_key": api_key})
-            if not result.first():
-                abort(403, description="Invalid API key")
+        auth_header = request.headers.get('Authorization')
+        if not auth_header:
+            abort(401, description="Authorization header is missing")
+
+        parts = auth_header.split()
+
+        if parts[0].lower() != 'bearer' or len(parts) != 2:
+            abort(401, description="Authorization header must be in the format 'Bearer <token>'")
+
+        token = parts[1]
+        try:
+            # Decode the token. PyJWT automatically handles expiration checks.
+            payload = jwt.decode(token, SECRET_KEY, algorithms=["HS256"])
+            # Store the payload in Flask's request context for use in the endpoint
+            g.user = payload
+        except jwt.ExpiredSignatureError:
+            abort(401, description="Token has expired")
+        except jwt.InvalidTokenError:
+            abort(403, description="Invalid token")
+
         return func(*args, **kwargs)
     return wrapper

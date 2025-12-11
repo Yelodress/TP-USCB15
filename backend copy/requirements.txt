@@ -1,6 +1,5 @@
 Flask
 SQLAlchemy
-PyMySQL
-PyJWT
+pymysql
 cryptography
 requests
