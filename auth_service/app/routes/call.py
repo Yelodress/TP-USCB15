@@ -27,3 +27,26 @@ def call_endpoint(app):
         except requests.exceptions.RequestException as e:
             print(f"Error calling backend service: {e}")
             return jsonify({"error": "Failed to communicate with the backend service"}), 502
+        
+    @app.post("/questions/<ref>")
+    def call_questions_service_by_ref(ref):
+        """
+        An endpoint that acts as a proxy to the backend service.
+        It expects a JWT in the Authorization header and forwards the request
+        to the backend /questions endpoint with a ref parameter.
+        """
+        auth_header = request.headers.get('Authorization')
+
+        if not auth_header:
+            return jsonify({"error": "Authorization header is required"}), 401
+
+        headers = {"Authorization": auth_header}
+        try:
+            response = requests.get(
+                f"{BACKEND_SERVICE_URL}/questions/{ref}", headers=headers, timeout=5
+            )
+            response.raise_for_status()
+            return response.json(), response.status_code
+        except requests.exceptions.RequestException as e:
+            print(f"Error calling backend service: {e}")
+            return jsonify({"error": "Failed to communicate with the backend service"}), 502
