@@ -1,5 +1,6 @@
 from flask import Flask, jsonify
 from app.routes.questions import questions_endpoint
+from app.routes.answers import answers_endpoint
 
 def create_app():
     app = Flask(__name__)
@@ -7,7 +8,7 @@ def create_app():
     @app.get("/")
     def index():
      return jsonify({"message": "Tp-usb15"})
-   
+    answers_endpoint(app)
     questions_endpoint(app)
 
     return app
