@@ -107,3 +107,9 @@ sudo apt install docker-ce docker-ce-cli containerd.io docker-buildx-plugin dock
 ```
 sudo docker run hello-world
 ```
+
+#### TODO
+- Faire en sorte que l'application sub une réponse (la route réponses est fonctionnelle manque juste le / à protéger)
+- Permettre à l'admin de créer des utilisateurs auxquels on ajoute les token normalement c'est gérer de façon auto pour les token
+- Peut être une interface web pour avoir une visu des réponse
+- Sécuriser les routes seulement visible par rôle admin exemple answer qui ne doit pas être visible par les user
