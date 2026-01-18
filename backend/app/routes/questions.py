@@ -6,20 +6,20 @@ from app.agents.log_agent import send_log
 
 def questions_endpoint(app):
     
-    @app.get("/questions") # Afficher la liste des questions
+    @app.get("/questions")
     @require_jwt
-    def list_questions():
+    def list_all_questions():
         with engine.begin() as conn:
             send_log("INFO", "Liste des questions demandée")
             result = conn.execute(text("SELECT id, content, answer FROM question"))
             rows = [dict(r) for r in result.mappings()]
         return jsonify(rows), 200
 
-    @app.get("/questions/<ref>") # Afficher un question en particulier
+    @app.get("/questions/<ref>")
     @require_jwt
-    def get_questions(ref):
+    def get_one_question(ref):
         with engine.begin() as conn:
             send_log("INFO", f"La question {ref} a ete demandee")
-            result = conn.execute(text("SELECT id, content FROM questions Where LOWER(id) = LOWER(:ref)"),{"ref": ref})
+            result = conn.execute(text("SELECT id, content FROM question Where id = :ref"),{"ref": ref})
             rows = [dict(r) for r in result.mappings()]
         return jsonify(rows), 200

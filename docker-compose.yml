@@ -38,6 +38,7 @@ services:
       SECRET_KEY: ${SECRET_KEY}
     depends_on:
       - db_api
+      - vault
 
   log_service:
     build: ./log_service
@@ -78,6 +79,18 @@ services:
       SECRET_KEY: ${SECRET_KEY}
     depends_on:
       - db_auth
+      - vault
+
+  vault:
+    image: hashicorp/vault:latest
+    container_name: vault
+    ports:
+      - "8200:8200"
+    environment:
+      VAULT_DEV_ROOT_TOKEN_ID: root
+      VAULT_DEV_LISTEN_ADDRESS: 0.0.0.0:8200
+    cap_add:
+      - IPC_LOCK
 
 volumes:
   db_api_data:
