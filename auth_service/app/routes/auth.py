@@ -3,6 +3,7 @@ from sqlalchemy import text
 from app.connect import engine, SECRET_KEY
 import jwt
 import uuid
+import bcrypt
 from datetime import datetime, timedelta
 
 def auth_endpoint(app):
@@ -30,8 +31,8 @@ def auth_endpoint(app):
 
             user_id, db_username, db_password = result
 
-            # NOTE: remplacer par un vrai hachage (bcrypt) en prod
-            if db_password != password:
+            # Verify password using bcrypt
+            if not bcrypt.checkpw(password.encode(), db_password.encode()):
                 return jsonify({"error": "Invalid credentials"}), 401
 
             # --- LOGIQUE DU REFRESH TOKEN A LA CONNEXION ---
@@ -87,7 +88,8 @@ def auth_endpoint(app):
             }), 200
 
         except Exception as e:
-            return jsonify({"error": str(e)}), 500
+            print(f"Login error: {e}")
+            return jsonify({"error": "Authentication failed"}), 500
         
     @app.post("/refresh")
     def refresh():
@@ -130,7 +132,8 @@ def auth_endpoint(app):
             return jsonify({"access_token": access_token}), 200
 
         except Exception as e:
-            return jsonify({"error": str(e)}), 500
+            print(f"Refresh token error: {e}")
+            return jsonify({"error": "Refresh failed"}), 500
 
     @app.post("/logout")
     def logout():
@@ -149,6 +152,7 @@ def auth_endpoint(app):
                 conn.commit()
             return jsonify({"message": "Successfully logged out"}), 200
         except Exception as e:
-            return jsonify({"error": str(e)}), 500
+            print(f"Logout error: {e}")
+            return jsonify({"error": "Logout failed"}), 500
 
 ## todo securiser la gestion du refresh token du coter de l'utilisateur
