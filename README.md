@@ -113,3 +113,4 @@ sudo docker run hello-world
 - Permettre à l'admin de créer des utilisateurs auxquels on ajoute les token normalement c'est gérer de façon auto pour les token
 - Peut être une interface web pour avoir une visu des réponse
 - Sécuriser les routes seulement visible par rôle admin exemple answer qui ne doit pas être visible par les user
+- Limiter les appels API uniquement par la gateway (proxi ?). Pour se faire, potentiellement foutre un certificat ou cloisonner les réseaux du Docker. Objectif: empecher de bypass la gateway
