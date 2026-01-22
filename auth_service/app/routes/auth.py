@@ -6,8 +6,9 @@ import uuid
 import bcrypt
 from datetime import datetime, timedelta
 
-def auth_endpoint(app):
+def auth_endpoint(app, limiter):
     @app.post("/auth")
+    @limiter.limit("5 per minute")
     def login():
         data = request.get_json() or {}
         username = data.get("username")
@@ -92,6 +93,7 @@ def auth_endpoint(app):
             return jsonify({"error": "Authentication failed"}), 500
         
     @app.post("/refresh")
+    @limiter.limit("10 per minute")
     def refresh():
         data = request.get_json() or {}
         refresh_token = data.get("refresh_token")
@@ -136,6 +138,7 @@ def auth_endpoint(app):
             return jsonify({"error": "Refresh failed"}), 500
 
     @app.post("/logout")
+    @limiter.limit("10 per minute")
     def logout():
         data = request.get_json() or {}
         refresh_token = data.get("refresh_token")
