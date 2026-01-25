@@ -110,7 +110,7 @@ sudo docker run hello-world
 
 #### Téléchargement de la branche principale (stable)
 ```
-git clone https://github.com/clarkSTRP/Tp-Avion
+git clone https://github.com/Yelodress/TP-USCB15
 ```
 
 #### Lancement du conteneur
