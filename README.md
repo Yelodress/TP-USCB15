@@ -108,6 +108,20 @@ sudo apt install docker-ce docker-ce-cli containerd.io docker-buildx-plugin dock
 sudo docker run hello-world
 ```
 
+#### Téléchargement de la branche principale (stable)
+```
+git clone https://github.com/clarkSTRP/Tp-Avion
+```
+
+#### Lancement du conteneur
+```
+docker compose up --build
+```
+
+#### Après arrêt du docker, vous pouvez effacer les informations laissées en mémoire avec
+```
+docker compose down -v
+```
 #### TODO
 - Faire en sorte que l'application sub une réponse (la route réponses est fonctionnelle manque juste le / à protéger)
 - Permettre à l'admin de créer des utilisateurs auxquels on ajoute les token normalement c'est gérer de façon auto pour les token
