@@ -3,12 +3,10 @@ CREATE TABLE IF NOT EXISTS users (
   id INT AUTO_INCREMENT PRIMARY KEY,
   username VARCHAR(255) NOT NULL UNIQUE,
   password VARCHAR(255) NOT NULL,
+  role VARCHAR(50) NOT NULL DEFAULT 'USER',
   created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
 
--- Utilisateur par défaut simple (mot de passe en clair pour test)
-INSERT IGNORE INTO users (username, password) VALUES
-  ('user1', 'pass1');
 
 -- Table pour stocker les refresh tokens
 CREATE TABLE IF NOT EXISTS refresh_tokens (

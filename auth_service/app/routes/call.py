@@ -1,11 +1,13 @@
 from flask import jsonify, request
 import requests
 import os
+from app.utils import gate_is_admin
 # These URLs are for communication within the Docker network.
 BACKEND_SERVICE_URL = os.environ.get("BACKEND_SERVICE_URL", "http://api:8000")  # 'api' is the service name in docker-compose.yml
 
 def call_endpoint(app):
     @app.post("/call-questions")
+    @gate_is_admin
     def call_questions_service():
         """
         An endpoint that acts as a proxy to the backend service.
@@ -15,7 +17,7 @@ def call_endpoint(app):
         auth_header = request.headers.get('Authorization')
 
         if not auth_header:
-            return jsonify({"error": "Authorization header is required"}), 401
+            return jsonify({"error": "HELOOOOOOAuthorization header is required"}), 401
 
         headers = {"Authorization": auth_header}
         try:
@@ -34,16 +36,13 @@ def call_endpoint(app):
         An endpoint that acts as a proxy to the backend service for posting an answer.
         It expects a JWT in the Authorization header and a JSON body,
         and forwards the request to the backend /answers endpoint.
+        Only accessible to the admin user.
         """
-        auth_header = request.headers.get('Authorization')
-        if not auth_header:
-            return jsonify({"error": "Authorization header is required"}), 401
-
         data = request.get_json()
         if not data:
             return jsonify({"error": "Request body is required"}), 400
 
-        headers = {"Authorization": auth_header}
+        headers = {"Authorization": request.headers.get('Authorization')}
         try:
             response = requests.post(
                 f"{BACKEND_SERVICE_URL}/answers", headers=headers, json=data, timeout=5

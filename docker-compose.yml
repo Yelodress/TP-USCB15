@@ -11,6 +11,11 @@ services:
     volumes:
       - db_api_data:/var/lib/mysql
       - ./sql:/docker-entrypoint-initdb.d:ro
+    healthcheck:
+      test: ["CMD", "mysqladmin" ,"ping", "-h", "localhost", "-u", "root", "-p$${MYSQL_ROOT_PASSWORD}"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
 
   db_log:
     image: mysql:8.0
@@ -24,6 +29,11 @@ services:
     volumes:
       - db_log_data:/var/lib/mysql
       - ./sql_log:/docker-entrypoint-initdb.d:ro
+    healthcheck:
+      test: ["CMD", "mysqladmin" ,"ping", "-h", "localhost", "-u", "root", "-p$${MYSQL_ROOT_PASSWORD}"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
 
   api:
     build: ./backend
@@ -40,7 +50,8 @@ services:
       DB_PASS: tp_pass
       SECRET_KEY: ${SECRET_KEY}
     depends_on:
-      - db_api
+      db_api:
+        condition: service_healthy
 
   log_service:
     build: ./log_service
@@ -53,7 +64,8 @@ services:
       DB_USER: log_user
       DB_PASS: log_pass
     depends_on:
-      - db_log
+      db_log:
+        condition: service_healthy
 
   db_auth:
     image: mysql:8.0
@@ -67,6 +79,11 @@ services:
     volumes:
       - db_auth_data:/var/lib/mysql
       - ./sql_auth:/docker-entrypoint-initdb.d:ro
+    healthcheck:
+      test: ["CMD", "mysqladmin" ,"ping", "-h", "localhost", "-u", "root", "-p$${MYSQL_ROOT_PASSWORD}"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
 
   auth_service:
     build: ./auth_service
@@ -83,7 +100,8 @@ services:
       DB_PASS: auth_pass
       SECRET_KEY: ${SECRET_KEY}
     depends_on:
-      - db_auth
+      db_auth:
+        condition: service_healthy
 
 networks:
   public:

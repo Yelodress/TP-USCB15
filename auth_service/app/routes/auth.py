@@ -3,8 +3,8 @@ from sqlalchemy import text
 from app.connect import engine, SECRET_KEY
 import jwt
 import uuid
-import bcrypt
 from datetime import datetime, timedelta
+from werkzeug.security import check_password_hash
 
 def auth_endpoint(app, limiter):
     @app.post("/auth")
@@ -21,7 +21,7 @@ def auth_endpoint(app, limiter):
             with engine.connect() as conn:
                 result = conn.execute(
                     text("""
-                        SELECT id, username, password FROM users
+                        SELECT id, username, password, role FROM users
                         WHERE username = :username
                     """),
                     {"username": username}
@@ -30,10 +30,10 @@ def auth_endpoint(app, limiter):
             if not result:
                 return jsonify({"error": "Invalid credentials"}), 401
 
-            user_id, db_username, db_password = result
+            user_id, db_username, db_password, role = result
 
-            # Verify password using bcrypt
-            if not bcrypt.checkpw(password.encode(), db_password.encode()):
+            # Verify password using Werkzeug, which matches the hash format in the database
+            if not check_password_hash(db_password, password):
                 return jsonify({"error": "Invalid credentials"}), 401
 
             # --- LOGIQUE DU REFRESH TOKEN A LA CONNEXION ---
@@ -77,6 +77,7 @@ def auth_endpoint(app, limiter):
             access_token_payload = {
                 "user_id": user_id,
                 "username": username,
+                "role": role,
                 "exp": datetime.utcnow() + timedelta(minutes=15)
             }
             access_token = jwt.encode(access_token_payload, SECRET_KEY, algorithm="HS256")
@@ -85,7 +86,8 @@ def auth_endpoint(app, limiter):
                 "access_token": access_token,
                 "refresh_token": refresh_token,
                 "user_id": user_id,
-                "username": username
+                "username": username,
+                "role": role
             }), 200
 
         except Exception as e:
@@ -121,12 +123,15 @@ def auth_endpoint(app, limiter):
 
             # Récupérer le nom d'utilisateur pour le nouveau payload
             with engine.connect() as conn:
-                username = conn.execute(text("SELECT username FROM users WHERE id = :user_id"), {"user_id": user_id}).scalar_one()
+                user_data = conn.execute(text("SELECT username, role FROM users WHERE id = :user_id"), {"user_id": user_id}).fetchone()
+
+            username, role = user_data
 
             # Générer un nouvel access token
             access_token_payload = {
                 "user_id": user_id,
                 "username": username,
+                "role": role,
                 "exp": datetime.utcnow() + timedelta(minutes=15)
             }
             access_token = jwt.encode(access_token_payload, SECRET_KEY, algorithm="HS256")

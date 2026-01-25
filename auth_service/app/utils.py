@@ -3,7 +3,7 @@ from flask import request, jsonify
 import jwt
 from app.connect import SECRET_KEY
 
-def require_admin(f):
+def gate_is_admin(f):
     """
     Decorator to ensure the user is an admin.
     """

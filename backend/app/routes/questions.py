@@ -3,11 +3,13 @@ from sqlalchemy import text
 from ..connect import engine
 from app.auth import require_jwt
 from app.agents.log_agent import send_log
+from app.utils import require_admin
 
 def questions_endpoint(app):
     
     @app.get("/questions")
     @require_jwt
+    @require_admin
     def list_all_questions():
         with engine.begin() as conn:
             send_log("INFO", "Liste des questions demandée")
@@ -17,6 +19,7 @@ def questions_endpoint(app):
 
     @app.get("/questions/<ref>")
     @require_jwt
+    @require_admin
     def get_one_question(ref):
         with engine.begin() as conn:
             send_log("INFO", f"La question {ref} a ete demandee")
