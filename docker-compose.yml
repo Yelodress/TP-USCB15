@@ -15,7 +15,8 @@ services:
       test: ["CMD", "mysqladmin" ,"ping", "-h", "localhost", "-u", "root", "-p$${MYSQL_ROOT_PASSWORD}"]
       interval: 10s
       timeout: 5s
-      retries: 5
+      retries: 30
+      start_period: 60s
 
   db_log:
     image: mysql:8.0
@@ -33,7 +34,8 @@ services:
       test: ["CMD", "mysqladmin" ,"ping", "-h", "localhost", "-u", "root", "-p$${MYSQL_ROOT_PASSWORD}"]
       interval: 10s
       timeout: 5s
-      retries: 5
+      retries: 30
+      start_period: 60s
 
   api:
     build: ./backend
@@ -83,7 +85,8 @@ services:
       test: ["CMD", "mysqladmin" ,"ping", "-h", "localhost", "-u", "root", "-p$${MYSQL_ROOT_PASSWORD}"]
       interval: 10s
       timeout: 5s
-      retries: 5
+      retries: 30
+      start_period: 60s
 
   auth_service:
     build: ./auth_service
