@@ -6,3 +6,4 @@ cryptography
 requests
 bcrypt
 Flask-Limiter
+pyOpenSSL

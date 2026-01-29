@@ -89,4 +89,10 @@ def create_app():
 app = create_app()
 
 if __name__ == "__main__":
-    app.run(host="0.0.0.0", port=8002)
+    # For development, you can enable TLS directly in Flask.
+    # The 'adhoc' option generates a temporary self-signed certificate.
+    # This requires the 'pyopenssl' package to be installed (`pip install pyopenssl`).
+    # For production, it is highly recommended to use a production-grade web server
+    # (like Gunicorn) behind a reverse proxy (like Nginx) that handles TLS termination.
+    # This will make your application accessible via https://
+    app.run(host="0.0.0.0", port=8002, ssl_context='adhoc')
