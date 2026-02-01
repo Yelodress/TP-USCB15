@@ -33,23 +33,35 @@ def call_endpoint(app):
     @app.post("/call-answers")
     def call_answers_service():
         """
-        An endpoint that acts as a proxy to the backend service for posting an answer.
-        It expects a JWT in the Authorization header and a JSON body,
-        and forwards the request to the backend /answers endpoint.
-        Only accessible to the admin user.
+        Acts as a proxy to the backend service for posting an answer with an optional image.
+        It expects a JWT in the Authorization header and multipart/form-data,
+        forwarding the request to the backend /answers endpoint.
         """
-        data = request.get_json()
-        if not data:
-            return jsonify({"error": "Request body is required"}), 400
+        # For multipart/form-data, we check for form data or files.
+        if not request.form and not request.files:
+            return jsonify({"error": "Request body with form data or files is required"}), 400
 
+        # We must not forward the Content-Type header from the original request.
+        # `requests` will generate its own with the correct boundary for multipart.
         headers = {"Authorization": request.headers.get('Authorization')}
+
+        # The `requests` library can take Werkzeug's FileStorage objects directly.
+        forwarded_files = {
+            field: (file.filename, file.stream, file.content_type)
+            for field, file in request.files.items()
+        }
+
         try:
+            # When sending files, `requests` automatically sets the Content-Type to multipart/form-data.
             response = requests.post(
-                f"{BACKEND_SERVICE_URL}/answers", headers=headers, json=data, timeout=5
+                f"{BACKEND_SERVICE_URL}/answers",
+                headers=headers,
+                data=request.form,
+                files=forwarded_files,
+                timeout=15  # Increased timeout for potential file uploads
             )
-            # We forward the response directly to ensure that error messages from the backend
-            # (e.g., a 409 Conflict) are passed through to the client.
-            return response.json(), response.status_code
+            # We forward the response content, status code, and relevant headers directly.
+            return response.content, response.status_code, {'Content-Type': response.headers.get('Content-Type')}
         except requests.exceptions.RequestException as e:
             print(f"Error calling backend service: {e}")
             return jsonify({"error": "Failed to communicate with the backend service"}), 502

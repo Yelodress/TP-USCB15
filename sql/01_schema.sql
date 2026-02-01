@@ -36,7 +36,8 @@ CREATE TABLE IF NOT EXISTS user_answers (
   id INT AUTO_INCREMENT PRIMARY KEY,
   user_id INT NOT NULL, -- Référence à l'ID de l'utilisateur
   question_id INT NOT NULL,
-  reponse BOOLEAN NOT NULL,
+  response BOOLEAN NOT NULL,
+  image_path VARCHAR(255) DEFAULT NULL, -- Path to an optional image for the answer
   FOREIGN KEY (question_id) REFERENCES question(id) ON DELETE CASCADE,
   UNIQUE(user_id, question_id) -- Un utilisateur ne peut répondre qu'une seule fois à une question
 );
