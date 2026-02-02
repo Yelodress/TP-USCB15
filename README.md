@@ -3,6 +3,26 @@ Ce projet a pour objectif de développer une application mobile communiquant ave
 L’API est construite sous forme de microservices, chacun disposant de sa/ses propre(s) base(s) de données.
 
 L’accès à l’application et aux fonctionnalités de l’API est protégé par une authentification via JWT, afin de garantir l’identité de l’utilisateur.
+Tous les appels à l’API sont gérés par une API Gateway, qui se charge de router les requêtes vers les différents microservices.
+Cette passerelle applique également des règles de sécurité et de contrôle d’accès, configurables à l’aide de décorateurs tels que @requireJwt ou @requireAdmin.
+Ces mécanismes permettent de définir si une route est accessible publiquement ou soumise à une gestion des droits basée sur les rôles (RBAC).
+
+De plus, grâce à l’utilisation de SQLAlchemy, toutes les valeurs fournies à la base de données sont systématiquement sérialisées et nettoyées, ce qui permet de prévenir efficacement les attaques par injection SQL.
+
+Le l'upload de fichiers est également sécurisé par plusieurs mécanismes : une vérification stricte des extensions autorisées, le nettoyage du nom des fichiers, ainsi que l’attribution d’un identifiant unique à chaque image. Cette approche permet d’éviter les conflits de noms et empêche, par exemple, qu’un utilisateur puisse écraser ou supprimer le fichier d’un autre utilisateur.
+
+Par ailleurs, l’ensemble des données entrantes est soumis à une validation systématique afin de garantir leur conformité et leur intégrité avant traitement.
+
+Le service intègre également une logique de rate limiting, visant à limiter le nombre de requêtes par utilisateur et à se protéger contre les attaques de type brute force.
+
+Concernant la gestion des mots de passe, ceux-ci ne sont jamais stockés en clair. Ils sont protégés par un mécanisme de hachage sécurisé, utilisé lors de la vérification de l’authentification.
+
+De plus, les réponses de l’API sont volontairement peu explicites, afin de limiter les risques d’énumération d’utilisateurs via des messages d’erreur trop détaillés.
+
+Les JWT ont une durée de validité limitée à 15 minutes. Afin de permettre une authentification fluide sans avoir à ressaisir le mot de passe, un refresh token est également mis en place.
+
+Enfin, en cas de déconnexion via la route logout, le serveur procède
+
 
 Enfin, chaque action effectuée est enregistrée par un agent de logs, qui se charge de gérer la journalisation pour renforcer la réslience du système.
 
