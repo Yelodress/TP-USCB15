@@ -82,21 +82,13 @@ def auth_endpoint(app, limiter):
             }
             access_token = jwt.encode(access_token_payload, SECRET_KEY, algorithm="HS256")
 
-            # Créer la réponse JSON sans le refresh token
-            response_data = {
+            return jsonify({
                 "access_token": access_token,
+                "refresh_token": refresh_token,
                 "user_id": user_id,
                 "username": username,
                 "role": role
-            }
-            response = jsonify(response_data)
-
-            # Placer le refresh token dans un cookie HttpOnly, Secure.
-            # C'est la méthode sécurisée pour le stocker côté client.
-            response.set_cookie('refresh_token', refresh_token,
-                                httponly=True, secure=True, samesite='Lax',
-                                max_age=timedelta(days=7))
-            return response, 200
+            }), 200
 
         except Exception as e:
             print(f"Login error: {e}")
@@ -105,11 +97,11 @@ def auth_endpoint(app, limiter):
     @app.post("/refresh")
     @limiter.limit("10 per minute")
     def refresh():
-        # Lire le refresh token depuis le cookie au lieu du corps de la requête
-        refresh_token = request.cookies.get("refresh_token")
+        data = request.get_json() or {}
+        refresh_token = data.get("refresh_token")
 
         if not refresh_token:
-            return jsonify({"error": "Missing or invalid refresh token"}), 401
+            return jsonify({"error": "refresh_token is required"}), 400
 
         try:
             with engine.connect() as conn:
@@ -153,11 +145,11 @@ def auth_endpoint(app, limiter):
     @app.post("/logout")
     @limiter.limit("10 per minute")
     def logout():
-        # Lire le refresh token depuis le cookie pour le révoquer
-        refresh_token = request.cookies.get("refresh_token")
+        data = request.get_json() or {}
+        refresh_token = data.get("refresh_token")
 
         if not refresh_token:
-            return jsonify({"message": "No active session to log out from"}), 200
+            return jsonify({"error": "refresh_token is required"}), 400
 
         try:
             with engine.connect() as conn:
@@ -166,10 +158,9 @@ def auth_endpoint(app, limiter):
                     {"token": refresh_token}
                 )
                 conn.commit()
-            response = jsonify({"message": "Successfully logged out"})
-            # Demander au navigateur de supprimer le cookie
-            response.delete_cookie('refresh_token', path='/', samesite='Lax')
-            return response, 200
+            return jsonify({"message": "Successfully logged out"}), 200
         except Exception as e:
             print(f"Logout error: {e}")
             return jsonify({"error": "Logout failed"}), 500
+
+## todo securiser la gestion du refresh token du coter de l'utilisateur
