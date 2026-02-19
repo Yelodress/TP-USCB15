@@ -40,8 +40,8 @@ Enfin, chaque action effectuée est enregistrée par un agent de logs, qui se ch
 <summary>Côté client</summary>
 
 - Framework:`Flutter`
-- Chiffrement des données:`AES-CGM 256`
-- Chiffrement homomorphe:`?`
+- Chiffrement des données:`AES-GCM 256`
+- Chiffrement homomorphe:`Non implémenté`
 </details>
 
 ## Liste des routes disponibles
@@ -96,7 +96,7 @@ Enfin, chaque action effectuée est enregistrée par un agent de logs, qui se ch
 
 
 
-# Installation 🚧 (en cours de rédaction)
+# Installation de l'API
 ## Prérequis
 ### Docker
 #### Ajout du repo Docker:
@@ -138,7 +138,7 @@ git clone https://github.com/Yelodress/TP-USCB15
 docker compose up --build
 ```
 
-#### Après arrêt du docker, vous pouvez effacer les informations laissées en mémoire avec
+#### Pour arrêter proprement le docker:
 ```
 docker compose down -v
 ```
