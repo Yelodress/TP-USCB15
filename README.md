@@ -47,9 +47,10 @@ Enfin, chaque action effectuée est enregistrée par un agent de logs, qui se ch
 ## Liste des routes disponibles
 <details>
 <summary>Routes des questions/réponses</summary>
-  
-- `POST /question/<id>` Affiche une question en fonction de son ID
-- `POST /answer/<id>` Poste la réponse à une question ainsi que la photo liée
+
+- `POST /questions` Affiche toutes les questions enregistrées
+- `POST /call-questions/<id>` Affiche une question en fonction de son ID
+- `POST /call-answer` Poste la réponse à une question ainsi que la photo liée
 </details>
 
 <details>
