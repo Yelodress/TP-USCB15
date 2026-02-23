@@ -94,8 +94,11 @@ Enfin, chaque action effectuée est enregistrée par un agent de logs, qui se ch
 
 # Installation de l'API
 ## Prérequis
-### Docker
-#### Ajout du repo Docker:
+### Installation de Docker
+<details>
+  <summary>Installation de Docker</summary>
+
+Ajout du repo Docker:
 ```
   # Add Docker's official GPG key:
 sudo apt update
@@ -123,6 +126,8 @@ sudo apt install docker-ce docker-ce-cli containerd.io docker-buildx-plugin dock
 ```
 sudo docker run hello-world
 ```
+  
+</details> 
 
 #### Téléchargement de la branche principale (stable)
 ```
