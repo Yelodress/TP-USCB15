@@ -48,19 +48,14 @@ Enfin, chaque action effectuée est enregistrée par un agent de logs, qui se ch
 <details>
 <summary>Routes des questions/réponses</summary>
   
-- `GET /question` Affiche toutes les questions
-- `POST /question` Crée une question
-- `GET /question/<id>` Affiche une question en fonction de son ID
-- `POST /answer/<id>` Poste les réponses en fonction de la question
-- `POST /photo/<id>` Poste la photo liée à la réponse
-- `GET /answer/<id>` Récupère les réponses à une question
-- `GET /answer` Récupère toutes les réponses et l'ID des questions concernées
+- `POST /question/<id>` Affiche une question en fonction de son ID
+- `POST /answer/<id>` Poste la réponse à une question ainsi que la photo liée
 </details>
 
 <details>
 <summary>Routes des identité</summary>
 
-- `POST /auth` Poste les identifiants rentrés dans l'application mobile. Un retour de JWT est attendu si les identifiants sont valides.
+- `POST /auth` Permet de générer un JWT en fonction des credentials fournis
 
 </details>
 
@@ -142,9 +137,3 @@ docker compose up --build
 ```
 docker compose down -v
 ```
-#### TODO
-- Faire en sorte que l'application sub une réponse (la route réponses est fonctionnelle manque juste le / à protéger)
-- Permettre à l'admin de créer des utilisateurs auxquels on ajoute les token normalement c'est gérer de façon auto pour les token
-- Peut être une interface web pour avoir une visu des réponse
-- Sécuriser les routes seulement visible par rôle admin exemple answer qui ne doit pas être visible par les user
-- Limiter les appels API uniquement par la gateway (proxi ?). Pour se faire, potentiellement foutre un certificat ou cloisonner les réseaux du Docker. Objectif: empecher de bypass la gateway
