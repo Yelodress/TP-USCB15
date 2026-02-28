@@ -162,5 +162,3 @@ def auth_endpoint(app, limiter):
         except Exception as e:
             print(f"Logout error: {e}")
             return jsonify({"error": "Logout failed"}), 500
-
-## todo securiser la gestion du refresh token du coter de l'utilisateur
