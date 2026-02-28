@@ -143,3 +143,21 @@ docker compose up --build
 ```
 docker compose down -v
 ```
+
+<details>
+  <summary><h2>Tester la solution</h2></summary>
+
+#### Étape 1: Se login sur l'application (credentials: `admin:adminpass` ou `user1:pass1`)
+<img width="1080" height="2227" alt="image" src="https://github.com/user-attachments/assets/60d2235a-1dea-43c9-8b34-256c8eb0d8c7" />
+
+#### Étape 2: Scanner un QR code / saisir l'ID à la main (ID de questions: `1`, `2`, `3`, `4` et `5`
+<img width="1080" height="2227" alt="image" src="https://github.com/user-attachments/assets/7eac3a73-8f31-4513-9cb5-58fb3aadf285" />
+
+#### Étape 3: Saisir la réponse (pouce en l'air/pouce en bas) + prendre une photo du répondant
+<img width="1080" height="2227" alt="image" src="https://github.com/user-attachments/assets/de4547a9-c553-4256-b218-a8b844c7299e" />
+
+### Étape 4: Envoyer et attendre la confirmation
+<img width="1080" height="2227" alt="image" src="https://github.com/user-attachments/assets/cb943aa7-b74b-4637-a58d-426630de6e0e" />
+</details>
+
+
