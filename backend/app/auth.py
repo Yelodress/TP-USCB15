@@ -4,6 +4,12 @@ import jwt
 from app.connect import SECRET_KEY
 
 def require_jwt(func):
+    """
+    A decorator to protect endpoints with JWT authentication.
+
+    It expects an 'Authorization: Bearer <token>' header.
+    It decodes the JWT and if successful, stores the payload in `flask.g.user`.
+    """
     @wraps(func)
     def wrapper(*args, **kwargs):
         auth_header = request.headers.get('Authorization')

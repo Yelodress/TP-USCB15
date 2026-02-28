@@ -1,0 +1,22 @@
+strategie de retention des datas 
+continuité du service BCP
+
+aligmenebt avce ce qui est legal
+
+
+
+
+API gateway
+python redirige les flux vers les differents service
+    donc auth 
+    puis post du user
+    si user existe alors give jwt
+    -------------
+
+main 
+
+python flask route auth
+ if post auth check bdd name and password
+    if auth ok give jwt to user for the rest of the api
+
+KMS

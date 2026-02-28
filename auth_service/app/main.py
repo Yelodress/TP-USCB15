@@ -17,6 +17,10 @@ limiter = Limiter(
 )
 
 def create_user(username, password, role='USER'):
+    """
+    Creates a user with a hashed password if they don't already exist.
+    This is a utility function for development setup.
+    """
     hashed_password = generate_password_hash(password)
     try:
         with engine.connect() as conn:
@@ -41,6 +45,10 @@ def create_user(username, password, role='USER'):
         print(f"Error creating user '{username}': {e}")
 
 def setup_database():
+    """
+    Waits for the database to be ready and creates default users.
+    This function implements a retry mechanism to handle race conditions during startup.
+    """
     max_retries = 10
     retry_delay = 5  # seconds
 
@@ -81,4 +89,10 @@ def create_app():
 app = create_app()
 
 if __name__ == "__main__":
+    # For development, you can enable TLS directly in Flask.
+    # The 'adhoc' option generates a temporary self-signed certificate.
+    # This requires the 'pyopenssl' package to be installed (`pip install pyopenssl`).
+    # For production, it is highly recommended to use a production-grade web server
+    # (like Gunicorn) behind a reverse proxy (like Nginx) that handles TLS termination.
+    # This will make your application accessible via https://
     app.run(host="0.0.0.0", port=8002, ssl_context='adhoc')

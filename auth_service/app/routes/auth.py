@@ -36,7 +36,8 @@ def auth_endpoint(app, limiter):
             if not check_password_hash(db_password, password):
                 return jsonify({"error": "Invalid credentials"}), 401
 
-            # Searching a existant / valid refresh token for this user
+            # --- LOGIQUE DU REFRESH TOKEN A LA CONNEXION ---
+            # 1. Chercher un refresh token existant et valide pour cet utilisateur
             refresh_token = None
             with engine.connect() as conn:
                 existing_token_result = conn.execute(
@@ -50,14 +51,14 @@ def auth_endpoint(app, limiter):
                 ).fetchone()
 
             if existing_token_result:
-                # If a token exists, reuse it
+                # 2a. Si un token valide existe, on le réutilise
                 refresh_token = existing_token_result[0]
             else:
-                # If not, create a new one
+                # 2b. Sinon (s'il n'y en a pas, ou s'ils sont tous expirés/révoqués), on en crée un nouveau
                 refresh_token = str(uuid.uuid4())
                 refresh_token_expiry = datetime.utcnow() + timedelta(days=7)
                 with engine.connect() as conn:
-                    # Insert the new token
+                    # On insère le nouveau token
                     conn.execute(
                         text("""
                             INSERT INTO refresh_tokens (user_id, token, expires_at)
@@ -71,7 +72,8 @@ def auth_endpoint(app, limiter):
                     )
                     conn.commit()
 
-            # Creating a new (and always new) JWT that has 15min of lifetime.
+            # --- Création de l'Access Token (JWT de courte durée) ---
+            # Cet access token est TOUJOURS nouveau, avec une durée de vie de 15 minutes
             access_token_payload = {
                 "user_id": user_id,
                 "username": username,
@@ -119,13 +121,13 @@ def auth_endpoint(app, limiter):
             if is_revoked or datetime.utcnow() > expires_at:
                 return jsonify({"error": "Refresh token is invalid or expired"}), 401
 
-            # Get the username for the payload
+            # Récupérer le nom d'utilisateur pour le nouveau payload
             with engine.connect() as conn:
                 user_data = conn.execute(text("SELECT username, role FROM users WHERE id = :user_id"), {"user_id": user_id}).fetchone()
 
             username, role = user_data
 
-            # Generate new access token
+            # Générer un nouvel access token
             access_token_payload = {
                 "user_id": user_id,
                 "username": username,
@@ -160,3 +162,5 @@ def auth_endpoint(app, limiter):
         except Exception as e:
             print(f"Logout error: {e}")
             return jsonify({"error": "Logout failed"}), 500
+
+## todo securiser la gestion du refresh token du coter de l'utilisateur

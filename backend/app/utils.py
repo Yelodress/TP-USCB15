@@ -4,6 +4,9 @@ import jwt
 from app.connect import SECRET_KEY
 
 def require_admin(f):
+    """
+    Decorator to ensure the user is an admin.
+    """
     @wraps(f)
     def decorated_function(*args, **kwargs):
         auth_header = request.headers.get('Authorization')
