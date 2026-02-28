@@ -31,13 +31,13 @@ CREATE TABLE IF NOT EXISTS api_keys (
 INSERT IGNORE INTO api_keys (api_key, description) VALUES
   ('cle1', 'default key for testing');
 
--- Création de la table "user_answers" pour stocker les réponses des utilisateurs
+-- Create the tanme "user_answers" to store users answers
 CREATE TABLE IF NOT EXISTS user_answers (
   id INT AUTO_INCREMENT PRIMARY KEY,
-  user_id INT NOT NULL, -- Référence à l'ID de l'utilisateur
+  user_id INT NOT NULL,
   question_id INT NOT NULL,
   response BOOLEAN NOT NULL,
-  image_path VARCHAR(255) DEFAULT NULL, -- Path to an optional image for the answer
+  image_path VARCHAR(255) DEFAULT NULL,
   FOREIGN KEY (question_id) REFERENCES question(id) ON DELETE CASCADE,
-  UNIQUE(user_id, question_id) -- Un utilisateur ne peut répondre qu'une seule fois à une question
+  UNIQUE(user_id, question_id) -- A user can answer only once to each questions
 );

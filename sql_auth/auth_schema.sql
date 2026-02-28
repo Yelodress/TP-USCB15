@@ -1,4 +1,4 @@
--- Schéma minimal pour le service d'authentification
+--Auth service
 CREATE TABLE IF NOT EXISTS users (
   id INT AUTO_INCREMENT PRIMARY KEY,
   username VARCHAR(255) NOT NULL UNIQUE,
@@ -8,7 +8,7 @@ CREATE TABLE IF NOT EXISTS users (
 );
 
 
--- Table pour stocker les refresh tokens
+-- Table to store refesh tokens
 CREATE TABLE IF NOT EXISTS refresh_tokens (
     id INT AUTO_INCREMENT PRIMARY KEY,
     user_id INT NOT NULL,

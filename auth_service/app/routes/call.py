@@ -32,11 +32,6 @@ def call_endpoint(app):
 
     @app.post("/call-answers")
     def call_answers_service():
-        """
-        Acts as a proxy to the backend service for posting an answer with an optional image.
-        It expects a JWT in the Authorization header and multipart/form-data,
-        forwarding the request to the backend /answers endpoint.
-        """
         # For multipart/form-data, we check for form data or files.
         if not request.form and not request.files:
             return jsonify({"error": "Request body with form data or files is required"}), 400
@@ -68,11 +63,6 @@ def call_endpoint(app):
         
     @app.post("/questions/<ref>")
     def call_questions_service_by_ref(ref):
-        """
-        An endpoint that acts as a proxy to the backend service.
-        It expects a JWT in the Authorization header and forwards the request
-        to the backend /questions endpoint with a ref parameter.
-        """
         auth_header = request.headers.get('Authorization')
 
         if not auth_header:
